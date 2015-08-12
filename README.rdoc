@@ -1,0 +1,6 @@
+Web app built with Ruby on Rails 4.2.2 to help Debate Mate USA manage their
+mentors. It will:
+
+* Send out emails on an automated schedule
+* Have mentors log information before and after their sessions
+* Share that information with admin users
