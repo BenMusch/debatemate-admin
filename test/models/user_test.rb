@@ -10,6 +10,10 @@ class UserTest < ActiveSupport::TestCase
                      password_confirmation: "foobar")
   end
 
+  test "authenticated? returns false for a user with a nil digest" do
+    assert_not @user.authenticated?('')
+  end
+
   test "name must be present" do
     @user.name = "   "
   end

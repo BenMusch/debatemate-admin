@@ -16,6 +16,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
 
   test "successful signup" do
     get signup_path
+    User.all.each { |u| u.delete }
     assert_difference 'User.count', 1 do
       post_via_redirect users_path, user: { name: "Test Person",
                                             email: "test@example.com",
@@ -24,5 +25,6 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
                                             admin: "0" }
     end
     assert_template 'users/show'
+    assert is_logged_in?
   end
 end
