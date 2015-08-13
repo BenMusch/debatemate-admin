@@ -1,13 +1,15 @@
 class User < ActiveRecord::Base
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :name,     length: { minimum: 6, maximum: 50, allow_blank: false },
+  validates :name,     length: { minimum: 6, maximum: 50 },
+                       presence: true,
                        uniqueness: true,
                        case_sensitive: false
   validates :email,    length: { maximum: 255, allow_blank: false },
                        format: { with: VALID_EMAIL_REGEX },
                        uniqueness: true,
+                       presence: true,
                        case_sensitive: false
-  validates :password, length: {minimum: 6 },
+  validates :password, length: { minimum: 6 },
                        presence: true
   validate do
     check_admin_email
@@ -15,7 +17,6 @@ class User < ActiveRecord::Base
   has_secure_password
 
   private
-
     # validates admin emails using the debatemate_email method
     def check_admin_email
       if admin? && !debatemate_email?
