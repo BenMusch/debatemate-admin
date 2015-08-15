@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-root 'application#under_construction'
+  root               'application#under_construction'
 
   get    'signup' => 'users#new'
   get    'login'  => 'sessions#new'
@@ -8,4 +8,5 @@ root 'application#under_construction'
 
   resources :users
   resources :account_activations, only: [:edit]
+  resources :password_resets,     only: [:edit, :new, :create, :update]
 end
