@@ -7,4 +7,5 @@ root 'application#under_construction'
   delete 'logout' => 'sessions#destroy'
 
   resources :users
+  resources :account_activations, only: [:edit]
 end
