@@ -1,3 +1,22 @@
+/* typography */
+h1 {
+  text-align: center;
+}
+
+/* footer */
+
+footer {
+  margin-top: 35px;
+  border-top: 1px solid $gray-lighter;
+  padding: 10px;
+  a {
+    color: $gray-light;
+    &:hover {
+      color: $gray-light;
+    }
+  }
+}
+
 /* forms */
 #error_explanation {
   color: red;
@@ -25,4 +44,12 @@
 #session_remember_me {
   width: auto;
   margin-left: 0;
+}
+
+#admin {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  margin-bottom: 12px;
 }

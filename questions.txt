@@ -1,0 +1,63 @@
+POST SESSION
+
+Name
+
+School
+
+Did you attend and deliver your session?
+-> [if yes] Day of session
+-> [if yes] Is this not the day you normally deliver your session.
+  -> [if no] Why not?
+
+How many students attended?
+
+Is it the same group of students each week?
+  -> Please describe the variation (ie: what proportion of new vs. old students, how many attend regularly, etc.)
+
+Is this week's attendance lower than usual?
+  -> [if yes] How do you/the teacher plan to improve it?
+
+Did the teacher attend the whole session?
+
+What role did the teacher play in the session?
+  * Very involved
+  * Somewhat involved
+  * Not involved
+  * Not present
+  * Other (please specify)
+
+What were the learning objectives for this session?
+
+Lesson plan week number
+
+How did you plan to achieve this objectives?
+
+Did your group achieve these objectives?
+  -> [if no] How do you plan to meet these goals in the future?
+
+Did you have enough time to cover all the material in the lesson?
+  -> [if no] How do you plan to cover the rest of these materials next week?
+
+What objectives do you have for your group next week?
+
+Did you do a debate this week?
+  -> [if yes] What motion did you do?
+
+Did you have a mixture of new and old students in your group?
+  -> [if yes] Please describe the distribution of their ability
+
+Did you personally buy food for your group? (LIMIT $8)
+
+Are you the primary contact for your school?
+
+Cost of travel this session
+
+PRE SESSION---------------------------------------------------------------------
+
+What day is the session due to take place?
+
+Name
+
+School
+
+What are the objectives of the session? How do you plan to reach these objectives?t

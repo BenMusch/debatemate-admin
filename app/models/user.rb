@@ -92,6 +92,10 @@ class User < ActiveRecord::Base
     name.split[0]
   end
 
+  def to_s
+    email + ": " + name
+  end
+
   private
     # validates admin emails using the debatemate_email method
     def check_admin_email

@@ -23,6 +23,11 @@ module SessionsHelper
     !current_user.nil?
   end
 
+  # Is the current user an admin?
+  def admin?
+    current_user && current_user.admin?
+  end
+
   # Forgets a persistent session
   def forget(user)
     user.forget
@@ -42,5 +47,23 @@ module SessionsHelper
     user.remember
     cookies.permanent.signed[:user_id] = user.id
     cookies.permanent[:remember_token] = user.remember_token
+  end
+
+  # Forces the user to login
+  def force_login
+    force_redirect_unless { logged_in? }
+  end
+
+  # Forces the user to be an admin
+  def force_admin
+    force_redirect_unless { admin? }
+  end
+
+  # Forces redirect unless the passed block returns true
+  def force_redirect_unless(options={})
+    unless yield
+      redirect_to options[:page] || root_url
+      flash[:danger] = options[:message] || 'You are not allowed to view that page'
+    end
   end
 end

@@ -1,4 +1,5 @@
 michael:
+  id: 1
   name: Michael Example
   email: test@example.com
   admin: false
@@ -7,9 +8,19 @@ michael:
   password_digest: <%= User.digest('password') %>
 
 ben:
+  id: 2
   name: Ben Example
   email: ben@example.com
   admin: true
   activated: true
   activated_at: <%= Time.zone.now %>
   password_digest: <%= User.digest('password') %>
+
+john:
+    id: 3
+    name: John Example
+    email: john@example.com
+    admin: false
+    activated: true
+    activated_at: <%= Time.zone.now %>
+    password_digest: <%= User.digest('password') %>

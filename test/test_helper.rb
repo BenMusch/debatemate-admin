@@ -24,6 +24,14 @@ class ActiveSupport::TestCase
     end
   end
 
+  # Tests that a page can't be seen by the current user
+  def cant_see_page(page, options = {})
+    get page
+    assert_redirected_to root_path
+    follow_redirect!
+    assert_not flash.empty?
+  end
+
   private
 
     # Returns true inside an integartion test

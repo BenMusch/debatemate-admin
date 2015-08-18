@@ -1,9 +1,16 @@
-<ul class="nav nav-pills">
-  <li role="presentation">
-    <% if logged_in? %>
-      <%= link_to "Log out", logout_path, method: :delete %>
-    <% else %>
-      <%= link_to "Log in", login_path %>
-    <% end %>
-  </li>
-</ul>
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar navbar-header">
+      <%= link_to "Debate Mate USA", root_path, class: "navbar-brand" %>
+    </div>
+    <div class="navbar navbar-right">
+      <% if admin? %>
+        <%= render 'layouts/admin_header' %>
+      <% elsif logged_in? %>
+        <%= render 'layouts/user_header' %>
+      <% else %>
+        <%= render 'layouts/unregistered_header' %>
+      <% end %>
+    </div>
+  </div>
+</nav>

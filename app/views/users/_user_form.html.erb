@@ -7,15 +7,14 @@
   <%= f.label :email %>
   <%= f.text_field :email, class: "form-control" %>
 
-  <%= f.label :admin, "Admin account?" %>
-  <%= f.check_box :admin %><br>
-
   <%= f.label :password %>
   <%= f.password_field :password, class: "form-control" %>
 
   <%= f.label :password_confirmation %>
   <%= f.password_field :password_confirmation, class: "form-control" %>
-  <br>
+
+  <%= f.label :admin, "Admin account?" %>
+  <%= f.check_box :admin, id: "admin" %><br>
 
   <%= f.submit "Create my account", class: "btn btn-primary" %>
 <% end %>
