@@ -1,2 +1,16 @@
-<h1>Lessons#show</h1>
-<p>Find me in app/views/lessons/show.html.erb</p>
+<h1><%= @lesson.to_s %></h1>
+<h4>Mentor<%= "s" if @lesson.users.count > 1 %>:
+  <%= @lesson.users.map(&:name).join(', ') %></h4>
+
+<center>
+  <%= link_to "Remove me from this lesson", '#',
+               data: { confirm: "Are you sure? This will delete the lesson if
+                 you are the only mentor"} %>
+</center>
+
+<h3>Goals</h3>
+<ul>
+  <% @lesson.goals.each do |goal| %>
+    <%= render 'goal', goal: goal %>
+  <% end %>
+</ul>

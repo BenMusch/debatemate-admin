@@ -17,10 +17,10 @@ ben:
   password_digest: <%= User.digest('password') %>
 
 john:
-    id: 3
-    name: John Example
-    email: john@example.com
-    admin: false
-    activated: true
-    activated_at: <%= Time.zone.now %>
-    password_digest: <%= User.digest('password') %>
+  id: 3
+  name: John Example
+  email: john@example.com
+  admin: false
+  activated: true
+  activated_at: <%= Time.zone.now %>
+  password_digest: <%= User.digest('password') %>

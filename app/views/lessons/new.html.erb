@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <h1>Pre Lesson Survey</h1>
+
+    <%= render 'shared/error_messages', object: @lesson %>
+
+    <%= form_for @lesson do |f| %>
+      <%= f.hidden_field :user_id, value: @user.id %>
+
+      <%= f.label :school %><br>
+      <%= f.select :school_id, @school_options %><br>
+
+      <%= f.label :date, "Date planned for lesson" %><br>
+      <%= f.date_field :date %><br>
+
+      <%= f.fields_for :goals do |response_form| %>
+        <%= response_form.hidden_field :user_id, value: @user.id %>
+
+        <%= response_form.label :text, "Goals for this lesson" %>
+        <%= response_form.text_area :text, class: "form-control" %>
+      <% end %>
+
+      <%= f.submit "Submit", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

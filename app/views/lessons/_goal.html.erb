@@ -1,0 +1,19 @@
+<li>
+  <div class="show-goal">
+    <%= goal.text %>
+    -<%= goal.user.name %>
+    <% if current_user.id == goal.user_id %>
+      <%= link_to "(edit)", '#', id: "edit-goal-button" %>
+    <% end %>
+  </div>
+  <div class="edit-goal">
+    <%= form_for goal, url: lesson_goal_path(lesson_id: @lesson.id, id: goal.id),
+                       method: :patch do |f| %>
+      <%= f.hidden_field :user_id, value: goal.user_id %>
+
+      <%= f.text_area :text, class: "form-control" %>
+
+      <%= f.submit "Save", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</li>

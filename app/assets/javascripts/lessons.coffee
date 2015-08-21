@@ -1,3 +1,5 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+$ ->
+  # show the form to edit a goal when the edit button is clicked
+  $("#edit-goal-button").click ->
+    $("#edit-goal-button").parent().toggle()
+    $("#edit-goal-button").parent().next().toggle()

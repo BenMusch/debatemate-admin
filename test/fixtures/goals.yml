@@ -1,0 +1,11 @@
+goal1:
+  id: 1
+  lesson_id: 1
+  user_id: 1
+  text: test goal
+
+goal2:
+  id: 2
+  lesson_id: 1
+  user_id: 3
+  text: test goal 2

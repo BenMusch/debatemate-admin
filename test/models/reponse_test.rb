@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class PreLessonSurveyTest < ActiveSupport::TestCase
+class ReponseTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

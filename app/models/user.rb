@@ -1,17 +1,21 @@
-# # SCHEMA
-#   name              (string)
-#   email             (string)
-#   password_digest   (string)
-#   remember_digest   (string)
-#   reset_digest      (string)
-#   activation_digest (string)
-#   admin             (boolean)
-#   activated         (boolean)
-#   activated_at      (datetime)
-#   reset_sent_at     (datetime)
+## SCHEMA
+#  name              (string)
+#  email             (string)
+#  password_digest   (string)
+#  remember_digest   (string)
+#  reset_digest      (string)
+#  activation_digest (string)
+#  admin             (boolean)
+#  activated         (boolean)
+#  activated_at      (datetime)
+#  reset_sent_at     (datetime)
+#  goals             (has-many)
+#  lessons           (many-to-many through goals)
 
 class User < ActiveRecord::Base
   attr_accessor :remember_token, :activation_token, :reset_token
+  has_many :lessons, through: :goals
+  has_many :goals
 
   before_save   :downcase_email
   before_create :create_activation_digest

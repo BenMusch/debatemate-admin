@@ -21,3 +21,9 @@ User.create(admin: false,
             password: "password",
             password_confirmation: "password",
             name: "Test User")
+
+schools = ["Hillsborough High School", "Harper High School", "King High School"]
+
+schools.each do |name|
+  School.create(name: name)
+end
