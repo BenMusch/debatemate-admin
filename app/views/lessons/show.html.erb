@@ -4,9 +4,13 @@
 
 <center>
   <%= link_to "Remove me from this lesson", '#',
-               data: { confirm: "Are you sure? This will delete the lesson if
-                 you are the only mentor"} %>
+               data: { confirm: "Are you sure?"} %> |
+  <%= link_to "Change the date of this lesson", '#', id: "date-change-button",
+              data: { toggle: "modal",
+                      target: "#myModal" } %>
 </center>
+
+<%= render 'date_change_modal' %>
 
 <h3>Goals</h3>
 <ul>

@@ -34,6 +34,17 @@ class LessonsController < ApplicationController
   def index
   end
 
+  def update
+    @lesson = Lesson.find(params[:id])
+    if @lesson.update_attributes(lesson_params)
+      flash[:success] = "Changes successful"
+    else
+      flash[:dander] = "Changes unsuccessful. See the link in the footer to"
+      flash[:danger] += "contact the developer if problems persist"
+    end
+    redirect_to @lesson
+  end
+
   def remove_user
     @lesson = Lesson.find(params[:id])
     if !@lesson.given_by?(current_user)
@@ -49,9 +60,11 @@ class LessonsController < ApplicationController
     end
   end
 
-
   def show
     @lesson = Lesson.find(params[:id])
+    @message = "Are you sure? Only do this if you and the other"
+    @message += " mentors in this lesson are chaning the date. Otherwise, remove"
+    @message += " yourself from this lesson and create a new one."
   end
 
   private

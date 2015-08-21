@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   resources :users
   resources :account_activations,  only: [:edit]
   resources :password_resets,      only: [:edit, :new, :create, :update]
-  resources :lessons,              only: [:new, :create, :show, :index] do
+  resources :lessons,              only: [:new, :create, :show, :index, :update] do
     resources :goals,              only: :update
   end
 end

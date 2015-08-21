@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150819210851) do
+ActiveRecord::Schema.define(version: 20150821190253) do
 
   create_table "goals", force: :cascade do |t|
     t.text     "text"
@@ -38,6 +38,19 @@ ActiveRecord::Schema.define(version: 20150819210851) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "surveys", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "lesson_id"
+    t.integer  "attendance"
+    t.integer  "week_number"
+    t.boolean  "teacher_attended_whole_lesson"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
+  add_index "surveys", ["lesson_id"], name: "index_surveys_on_lesson_id"
+  add_index "surveys", ["user_id"], name: "index_surveys_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
