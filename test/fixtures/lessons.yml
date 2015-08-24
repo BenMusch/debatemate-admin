@@ -1,4 +1,14 @@
-lesson1:
-  date: <%= Date.parse('30-9-2015') %>
+today:
+  date: <%= Date.today %>
   school_id: 1
   id: 1
+
+tomorrow:
+  date: <%= Date.tomorrow %>
+  school_id: 1
+  id: 2
+
+yesterday:
+  date: <%= Date.yesterday %>
+  school_id: 1
+  id: 3

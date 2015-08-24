@@ -9,3 +9,9 @@ goal2:
   lesson_id: 1
   user_id: 3
   text: test goal 2
+
+goal3:
+  id: 3
+  lesson_id: 2
+  user_id: 3
+  text: test goal 3

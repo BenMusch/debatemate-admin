@@ -1,0 +1,36 @@
+<% provide(:title, @school.name) %>
+
+<h1><%= @school.name %></h1>
+<h4>Mentor<%= "s" if @school.users.count > 1 %>:
+  <% @school.users.each_with_index do |user, index| %>
+    <%= link_to user.name, user %>
+    <%= ", " unless @school.users.count - 1 == index %>
+  <% end %>
+</h4>
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Completed Lessons</div>
+      <div class="panel-body">
+        <ul>
+          <% @school.lessons.order(date: :desc).completed.each do |lesson| %>
+            <li><%= link_to lesson.date.to_formatted_s(:long), lesson %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Upcoming Lessons</div>
+      <div class="panel-body">
+        <ul>
+          <% @school.lessons.upcoming.each do |lesson| %>
+            <li><%= link_to lesson.date.to_formatted_s(:long), lesson %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

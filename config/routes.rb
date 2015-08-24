@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  get 'goals/edit'
-
-  get 'goals/update'
 
   root               'application#index'
   get    'signup' => 'users#new'
@@ -16,4 +13,5 @@ Rails.application.routes.draw do
   resources :lessons,              only: [:new, :create, :show, :index, :update] do
     resources :goals,              only: :update
   end
+  resources :schools,              only: [:create, :index, :show, :update]
 end

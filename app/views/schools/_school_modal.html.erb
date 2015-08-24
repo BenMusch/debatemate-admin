@@ -1,15 +1,22 @@
-<div class="modal fade" id="dateModal">
+<center>
+<%= link_to "Add School", '#',
+                          class: 'btn btn-primary btn-center',
+                          data: { toggle: 'modal',
+                                  target: '#schoolModal' } %>
+</center>
+
+<div class="modal fade" id="schoolModal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <a type="button" class="close" data-dismiss="modal"
         aria-label="Close"><span aria-hidden="true">&times;</span></a>
-        <h4 class="modal-title">Change date</h4>
+        <h4 class="modal-title">New school</h4>
       </div>
-      <%= form_for @lesson do |f| %>
+      <%= form_for @school do |f| %>
         <div class="modal-body">
-          <%= f.label :date %>
-          <%= f.date_field :date %>
+          <%= f.label :name %>
+          <%= f.text_field :name %>
         </div>
         <div class="modal-footer">
           <a type="button" class="btn btn-default"

@@ -1,0 +1,9 @@
+<% provide(:title, "Schools") %>
+
+<%= render 'shared/error_messages', object: @school %>
+
+<h1>Schools</h1>
+
+<%= render 'school_modal' %>
+
+<%= render @schools %>

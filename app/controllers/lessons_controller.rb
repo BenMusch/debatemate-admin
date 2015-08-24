@@ -2,7 +2,6 @@ class LessonsController < ApplicationController
   include LessonsHelper
   include SessionsHelper
   before_action :force_login
-  before_action :force_admin,              only: :index
   before_action :force_same_user_or_admin, only: :show
 
   def new
@@ -32,6 +31,9 @@ class LessonsController < ApplicationController
   end
 
   def index
+    admin? ? lessons = Lesson.all : lessons = current_user.lessons
+    @upcoming_lessons  = lessons.upcoming
+    @completed_lessons = lessons.order('date DESC').completed
   end
 
   def update

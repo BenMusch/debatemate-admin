@@ -3,8 +3,7 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
 
   def index
-    render 'admin_home_page' if admin?
-    render 'user_home_page'  if logged_in? && !admin?
-    @user = User.new         unless logged_in?
+    redirect_to lessons_path if logged_in?
+    @user = User.new
   end
 end

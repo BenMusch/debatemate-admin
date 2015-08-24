@@ -1,3 +1,33 @@
 <% provide(:title, @user.name) %>
 
 <h1><%= @user.name %></h1>
+
+<h4><%= link_to @user.email, "mailto:#{@user.email}" %></h4>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Completed Lessons</div>
+      <div class="panel-body">
+        <ul>
+          <% @user.lessons.completed.order(date: :desc).each do |lesson| %>
+            <li><%= link_to lesson.to_s, lesson %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Upcoming Lessons</div>
+      <div class="panel-body">
+        <ul>
+          <% @user.lessons.upcoming.each do |lesson| %>
+            <li><%= link_to lesson.to_s, lesson %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

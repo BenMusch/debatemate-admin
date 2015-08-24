@@ -1,13 +1,22 @@
+<% provide(:title, @lesson.to_s) %>
+
 <h1><%= @lesson.to_s %></h1>
 <h4>Mentor<%= "s" if @lesson.users.count > 1 %>:
-  <%= @lesson.users.map(&:name).join(', ') %></h4>
+  <% if admin? %>
+    <% @lesson.users.each_with_index do |user, index| %>
+      <%= link_to user.name, user %>
+      <%= ", " unless @lesson.users.count - 1 == index %>
+    <% end %>
+  <% else %>
+    <%= @lesson.mentor_list %>
+  <% end %></h4>
 
 <center>
   <%= link_to "Remove me from this lesson", '#',
                data: { confirm: "Are you sure?"} %> |
   <%= link_to "Change the date of this lesson", '#', id: "date-change-button",
               data: { toggle: "modal",
-                      target: "#myModal" } %>
+                      target: "#dateModal" } %>
 </center>
 
 <%= render 'date_change_modal' %>

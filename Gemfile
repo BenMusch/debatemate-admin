@@ -13,6 +13,7 @@ gem 'sdoc',                 '~> 0.4.0', group: :doc
 gem 'tzinfo-data'
 gem 'bcrypt'
 gem 'bootstrap-sass'
+gem 'faker'
 
 group :development, :test do
   gem 'sqlite3'

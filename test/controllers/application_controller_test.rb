@@ -16,12 +16,12 @@ class ApplicationControllerTest < ActionController::TestCase
   test "should redirect to admin_home_page when logged in as admin" do
     log_in_as @admin
     get :index
-    assert_template 'application/admin_home_page'
+    assert_redirected_to lessons_path
   end
 
   test "should redirect to users_home_page when logged in as a normal user" do
     log_in_as @user
     get :index
-    assert_template 'application/user_home_page'
+    assert_redirected_to lessons_path
   end
 end

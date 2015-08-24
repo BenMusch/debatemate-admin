@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.where(admin: false)
+    @users = User.where(admin: false).order(:name)
   end
 
   private

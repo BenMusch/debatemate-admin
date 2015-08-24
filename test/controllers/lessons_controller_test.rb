@@ -8,7 +8,7 @@ class LessonsControllerTest < ActionController::TestCase
     @date2    = Date.parse('31-8-2015')
     @school1  = schools(:hhs).id
     @school2  = schools(:harper).id
-    @lesson   = lessons(:lesson1).id
+    @lesson   = lessons(:today).id
   end
 
   test "create" do
