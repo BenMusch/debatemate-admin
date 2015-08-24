@@ -74,7 +74,7 @@ class LessonsController < ApplicationController
     # Forces the current_user to be logged in and either an admin or the user
     # whose profile is being shown
     def force_same_user_or_admin
-      @lesson = Lesson.find_by(params[:id])
+      @lesson = Lesson.find(params[:id])
       force_redirect_unless do
         admin? || (current_user && @lesson.given_by?(current_user))
       end
