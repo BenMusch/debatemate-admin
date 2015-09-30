@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
 
-  root               'application#index'
-  get    'signup' => 'users#new'
-  get    'login'  => 'sessions#new'
-  post   'login'  => 'sessions#create'
-  delete 'logout' => 'sessions#destroy'
+  root                 'application#index'
+  get    'signup'   => 'users#new'
+  get    'login'    => 'sessions#new'
+  get    'set_days' => 'users#set_days'
+  post   'set_days' => 'users#update_days'
+  post   'login'    => 'sessions#create'
+  delete 'logout'   => 'sessions#destroy'
   delete 'lessons/:id/remove_user' => 'lessons#remove_user'
 
   resources :users

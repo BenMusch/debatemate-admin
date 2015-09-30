@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-md-3">
+    <span><%= user.name %></span>
+  </div>
+  <div class="col-md-9">
+    <%= f.fields_for user.name do |user_form| %>
+      <table class="days-table">
+        <tr>
+          <td>M</td>
+          <td>Tu</td>
+          <td>W</td>
+          <td>Th</td>
+          <td>F</td>
+        </tr>
+        <tr>
+          <td><%= user_form.check_box :monday, {}, true, false %></td>
+          <td><%= user_form.check_box :tuesday, {}, true, false %></td>
+          <td><%= user_form.check_box :wednesday, {}, true, false %></td>
+          <td><%= user_form.check_box :thursday, {}, true, false %></td>
+          <td><%= user_form.check_box :friday, {}, true, false %></td>
+        </tr>
+      </table>
+    <% end %>
+  </div>
+</div>

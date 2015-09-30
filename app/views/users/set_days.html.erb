@@ -1,0 +1,34 @@
+<h1>Set Days</h1>
+<%= form_tag set_days_path, method: :post do %>
+  <% @users.each do |user| %>
+    <div class="row">
+      <div class="col-md-3">
+        <span><%= user.name %></span>
+      </div>
+      <div class="col-md-9">
+        <table class="days-table">
+          <tr>
+            <td>M</td>
+            <td>Tu</td>
+            <td>W</td>
+            <td>Th</td>
+            <td>F</td>
+          </tr>
+          <tr>
+            <td><%= check_box_tag "days[#{user.id}][monday]", true,
+            user.monday %></td>
+            <td><%= check_box_tag "days[#{user.id}][tuesday]", true,
+            user.tuesday %></td>
+            <td><%= check_box_tag "days[#{user.id}][wednesday]", true,
+            user.wednesday %></td>
+            <td><%= check_box_tag "days[#{user.id}][thursday]", true,
+            user.thursday %></td>
+            <td><%= check_box_tag "days[#{user.id}][friday]", true,
+            user.friday %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  <% end %>
+  <%= submit_tag "Save", class: "btn btn-primary" %>
+<% end %>

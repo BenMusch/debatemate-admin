@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :force_same_user_or_admin, only: :show
-  before_action :force_admin,              only: :index
+  before_action :force_admin,              only: [:index, :set_days]
 
   def new
     @user = User.new
@@ -24,18 +24,38 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.where(admin: false).order(:name)
+    @users = User.mentor.order(:name)
+  end
+
+  def set_days
+    @users = User.mentor.order(:name)
+  end
+
+  def update_days
+    User.all.each do |user|
+      id_key = user.id.to_s
+      days = params["days"][id_key]
+      if days
+        user.update_attribute(:monday,    days["monday"] == "true")
+        user.update_attribute(:tuesday,   days["tuesday"] == "true")
+        user.update_attribute(:wednesday, days["wednesday"] == "true")
+        user.update_attribute(:thursday,  days["thursday"] == "true")
+        user.update_attribute(:friday,    days["friday"] == "true")
+      end
+    end
+    flash[:success] = "Days updated"
+    redirect_to root_url
   end
 
   private
 
     def user_params
       params[:admin] = params[:admin] == '1'
-      params.require(:user).permit(:password,
-                                   :password_confirmation,
-                                   :name,
-                                   :email,
-                                   :admin)
+      params.require(:user).permit(:password, :password_confirmation,
+                                   :name,     :email,
+                                   :admin,    :monday,
+                                   :tuesday,  :wednesday,
+                                   :thursday, :friday)
     end
 
     # Forces the current_user to be logged in and either an admin or the user

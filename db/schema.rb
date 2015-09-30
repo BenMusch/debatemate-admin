@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150821190253) do
+ActiveRecord::Schema.define(version: 20150924194750) do
 
   create_table "goals", force: :cascade do |t|
     t.text     "text"
@@ -65,6 +65,11 @@ ActiveRecord::Schema.define(version: 20150821190253) do
     t.datetime "activated_at"
     t.string   "reset_digest"
     t.datetime "reset_sent_at"
+    t.boolean  "monday"
+    t.boolean  "tuesday"
+    t.boolean  "wednesday"
+    t.boolean  "thursday"
+    t.boolean  "friday"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

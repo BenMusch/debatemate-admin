@@ -11,6 +11,11 @@
 #  reset_sent_at     (datetime)
 #  goals             (has-many)
 #  lessons           (many-to-many through goals)
+#  monday            (boolean)
+#  tuesday           (boolean)
+#  wednesday         (boolean)
+#  thursday          (boolean)
+#  friday            (boolean)
 
 class User < ActiveRecord::Base
   attr_accessor :remember_token, :activation_token, :reset_token
@@ -37,6 +42,8 @@ class User < ActiveRecord::Base
   end
 
   has_secure_password
+
+  scope :mentor, -> { where(admin: false) }
 
   # Returns the hash digest of the given string
   def User.digest(string)
