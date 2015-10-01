@@ -55,7 +55,8 @@ class UsersController < ApplicationController
                                    :name,     :email,
                                    :admin,    :monday,
                                    :tuesday,  :wednesday,
-                                   :thursday, :friday)
+                                   :thursday, :friday,
+                                   :phone)
     end
 
     # Forces the current_user to be logged in and either an admin or the user

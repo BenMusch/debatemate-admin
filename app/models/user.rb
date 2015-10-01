@@ -16,6 +16,7 @@
 #  wednesday         (boolean)
 #  thursday          (boolean)
 #  friday            (boolean)
+#  phone             (integer)
 
 class User < ActiveRecord::Base
   attr_accessor :remember_token, :activation_token, :reset_token
@@ -37,6 +38,9 @@ class User < ActiveRecord::Base
                        case_sensitive: false
   validates :password, length: { minimum: 6 },
                        presence: true
+  validates :phone,    presence: true,
+                       length: { is: 10 },
+                       numericality: true
   validate do
     check_admin_email
   end

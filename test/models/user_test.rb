@@ -7,7 +7,8 @@ class UserTest < ActiveSupport::TestCase
                      email: "example@user.com",
                      admin: false,
                      password:              "foobar",
-                     password_confirmation: "foobar")
+                     password_confirmation: "foobar",
+                     phone:                 1234567890)
   end
 
   test "authenticated? returns false for a user with a nil digest" do
@@ -74,6 +75,18 @@ class UserTest < ActiveSupport::TestCase
 
   test "passwords must be at least 6 characters" do
     @user.password = @user.password_confirmation = "a" * 5
+    assert_not @user.valid?
+  end
+
+  test "phone must be present" do
+    @user.phone = nil
+    assert_not @user.valid?
+  end
+
+  test "phone must be the right length" do
+    @user.phone = 111111111
+    assert_not @user.valid?
+    @user.phone = 11111111111
     assert_not @user.valid?
   end
 

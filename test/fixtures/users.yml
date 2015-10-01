@@ -6,11 +6,7 @@ michael:
   activated: true
   activated_at: <%= Time.zone.now %>
   password_digest: <%= User.digest('password') %>
-  monday: false
-  tuesday: false
-  wednesday: false
-  thursday: false
-  friday: false
+  phone: 1111111111
 
 ben:
   id: 2
@@ -20,11 +16,7 @@ ben:
   activated: true
   activated_at: <%= Time.zone.now %>
   password_digest: <%= User.digest('password') %>
-  monday: false
-  tuesday: false
-  wednesday: false
-  thursday: false
-  friday: false
+  phone: 2222222222
 
 john:
   id: 3
@@ -34,8 +26,4 @@ john:
   activated: true
   activated_at: <%= Time.zone.now %>
   password_digest: <%= User.digest('password') %>
-  monday: false
-  tuesday: false
-  wednesday: false
-  thursday: false
-  friday: false
+  phone: 3333333333

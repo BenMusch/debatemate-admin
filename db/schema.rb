@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150924194750) do
+ActiveRecord::Schema.define(version: 20151001193615) do
 
   create_table "goals", force: :cascade do |t|
     t.text     "text"
@@ -55,21 +55,22 @@ ActiveRecord::Schema.define(version: 20150924194750) do
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
     t.boolean  "admin"
     t.string   "password_digest"
     t.string   "remember_digest"
     t.string   "activation_digest"
-    t.boolean  "activated",         default: false
+    t.boolean  "activated",                    default: false
     t.datetime "activated_at"
     t.string   "reset_digest"
     t.datetime "reset_sent_at"
-    t.boolean  "monday"
-    t.boolean  "tuesday"
-    t.boolean  "wednesday"
-    t.boolean  "thursday"
-    t.boolean  "friday"
+    t.boolean  "monday",                       default: false
+    t.boolean  "tuesday",                      default: false
+    t.boolean  "wednesday",                    default: false
+    t.boolean  "thursday",                     default: false
+    t.boolean  "friday",                       default: false
+    t.integer  "phone",             limit: 10
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
