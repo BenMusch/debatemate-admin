@@ -15,6 +15,7 @@ gem 'bcrypt'
 gem 'bootstrap-sass'
 gem 'faker'
 gem 'twilio-ruby'
+gem 'figaro'
 
 group :development, :test do
   gem 'sqlite3'
