@@ -14,7 +14,7 @@
 #  monday            (boolean)
 #  tuesday           (boolean)
 #  wednesday         (boolean)
-#  thursday          (boolean)
+#  thursday          (boolean
 #  friday            (boolean)
 #  phone             (integer)
 
@@ -40,7 +40,8 @@ class User < ActiveRecord::Base
                        presence: true
   validates :phone,    presence: true,
                        length: { is: 10 },
-                       numericality: true
+                       numericality: true,
+                       uniqueness: true
   validate do
     check_admin_email
   end
@@ -109,6 +110,14 @@ class User < ActiveRecord::Base
 
   def to_s
     email + ": " + name
+  end
+
+  def send_lesson_text(date)
+    phone_number = phone
+
+  end
+
+  def send_survey_text(date)
   end
 
   private

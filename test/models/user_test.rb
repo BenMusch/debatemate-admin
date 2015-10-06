@@ -50,6 +50,7 @@ class UserTest < ActiveSupport::TestCase
   test "email must be unique" do
     duplicate = @user.dup
     @user.name = "New Name"
+    @user.phone = 1234567876
     @user.save
     assert_not duplicate.valid?
   end
@@ -57,6 +58,7 @@ class UserTest < ActiveSupport::TestCase
   test "name must be unique" do
     duplicate = @user.dup
     @user.email = "test@email.com"
+    @user.phone = 1234567654
     @user.save
     assert_not duplicate.valid?
   end
@@ -88,6 +90,14 @@ class UserTest < ActiveSupport::TestCase
     assert_not @user.valid?
     @user.phone = 11111111111
     assert_not @user.valid?
+  end
+
+  test "phone must be unique" do
+    duplicate = @user.dup
+    @user.name = "New Name"
+    @user.email = "test@test.com"
+    @user.save
+    assert_not duplicate.valid?
   end
 
   test "should be valid" do

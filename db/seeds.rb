@@ -4,7 +4,8 @@ User.create(admin: true,
             email: "admin@debatemate.com",
             password: "password",
             password_confirmation: "password",
-            name: "Test Admin")
+            name: "Test Admin",
+            phone: 1111111112)
 
 User.create(admin: false,
             activated: true,
@@ -12,7 +13,8 @@ User.create(admin: false,
             email: "user@debatemate.com",
             password: "password",
             password_confirmation: "password",
-            name: "Test User")
+            name: "Test User",
+            phone: 1111111111)
 
 100.times do
   User.create(admin: false,
@@ -21,7 +23,8 @@ User.create(admin: false,
               name: Faker::Name.name,
               email: Faker::Internet.email,
               password: "password",
-              password_confirmation: "password")
+              password_confirmation: "password",
+              phone: Faker::PhoneNumber.subscriber_number(10))
 end
 
 10.times do
