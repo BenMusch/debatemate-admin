@@ -14,7 +14,7 @@
 #  monday            (boolean)
 #  tuesday           (boolean)
 #  wednesday         (boolean)
-#  thursday          (boolean
+# thursday          (boolean
 #  friday            (boolean)
 #  phone             (integer)
 
@@ -85,6 +85,24 @@ class User < ActiveRecord::Base
     UserMailer.account_activation(self).deliver_now
   end
 
+  # Sends password reset email
+  def send_password_reset_email
+    UserMailer.password_reset(self).deliver_now
+  end
+
+  # Checks reminders and sends any necessary reminders
+  def remind
+    # if the lesson is in a day and they haven't done the pre-lesson
+    if lesson_tomorrow? && next_lesson.date != Date.tomorrow
+      send_pre_lesson_reminder_email
+    elsif Date.today == next_lesson.date
+      send_lesson_reminder_email
+    # if there was a lesson scheduled yesterday and no post-lesson survey was filled out
+    #elsif previous_lesson.unfinished?
+    # # remind the user to do the post lesson survey
+    end
+  end
+
   # Activates this user
   def activate
     update_attribute(:activated,    true)
@@ -98,26 +116,24 @@ class User < ActiveRecord::Base
     update_attribute(:reset_sent_at, Time.zone.now)
   end
 
-  # Sends password reset email
-  def send_password_reset_email
-    UserMailer.password_reset(self).deliver_now
-  end
-
   # Gets the first name of this user
   def first_name
     name.split[0]
   end
 
+  # Formats this user as a string
   def to_s
     email + ": " + name
   end
 
-  def send_lesson_text(date)
-    phone_number = phone
-
+  # returns the next lesson this user is in
+  def next_lesson
+    Lesson.upcoming.order(:date).first
   end
 
-  def send_survey_text(date)
+  # returns the most recently completed lesson
+  def previous_lesson
+    Lesson.previous.order('date DESC').first
   end
 
   private
@@ -142,5 +158,39 @@ class User < ActiveRecord::Base
     def create_activation_digest
       self.activation_token  = User.new_token
       self.activation_digest = User.digest(activation_token)
+    end
+
+    # does the user usually have a lesson tomorrow?
+    def lesson_tomorrow?
+      wday = Date.today.wday == 1
+      case wday
+      when 1
+        return monday?
+      when 2
+        return tuesday?
+      when 3
+        return wednesday?
+      when 4
+        return thursday?
+      when 5
+        return friday?
+      else
+        return false
+      end
+    end
+
+    # Sends the post-lesson survey reminder email
+    def send_survey_reminder_email
+      UserMailer.survey_reminder(self).deliver_now
+    end
+
+    # Sends the lesson reminder email
+    def send_lesson_reminder_email
+      UserMailer.lesson_reminder(self).deliver_now
+    end
+
+    # Sends the pre_lesson reminder email
+    def send_pre_lesson_reminder_email
+      UserMailer.lesson_reminder(self).deliver_now
     end
 end

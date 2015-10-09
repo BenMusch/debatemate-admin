@@ -1,0 +1,14 @@
+Reminder: Complete your Pre-Lesson Survey
+
+Click here to fill out the pre-lesson survey: <%= new_lesson_url %>
+
+You are receiving this message because you usually deliver a lesson on
+<%= @day %>. If you are not hosting a lesson on that day this week, ignore this
+email. If you never host lessons on <%= @day %>s, update your profile:
+<%= user_url(id: @user.id) %>
+
+================================================================================
+
+Do not respond to this email. If you have any questions, email Rich at
+richard@debatemate.com. If you think you're receiving this email due to a bug
+in the web site, contact the developer at muschol.b@husky.neu.edu.

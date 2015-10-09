@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 gem 'rails',                '4.2.2'
 gem 'sass-rails',           '~> 5.0'
 gem 'uglifier',             '>= 1.3.0'
@@ -16,6 +15,7 @@ gem 'bootstrap-sass'
 gem 'faker'
 gem 'twilio-ruby'
 gem 'figaro'
+gem 'whenever',             :require => false
 
 group :development, :test do
   gem 'sqlite3'

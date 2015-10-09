@@ -1,0 +1,17 @@
+<h1>Reminder: Lesson Scheduled Today</h1>
+
+<p>
+  You are receiving this email because you have a lesson scheduled today at
+  <%= @school %>. If you did not mean to sign up for this lesson, or meant to
+  host the lesson on a different date,
+  <%= link_to "change that information here", lesson_url(id: @lesson.id) %>.
+</p>
+
+<hr/>
+
+<small>
+  <b>Do not respond to this email.</b> If you have any questions,
+  <%= link_to "contact Rich.", "mailto:richard@debatemate.com" %>
+  If you think you're receiving this email due to a bug in the web site,
+  <%= link_to "email the developer.", "mailto:muschol.b@husky.neu.edu" %>
+</small>

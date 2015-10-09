@@ -36,11 +36,11 @@ class UsersController < ApplicationController
       id_key = user.id.to_s
       days = params["days"][id_key]
       if days
-        user.update_attribute(:monday,    days["monday"] == "true")
-        user.update_attribute(:tuesday,   days["tuesday"] == "true")
+        user.update_attribute(:monday,    days["monday"]    == "true")
+        user.update_attribute(:tuesday,   days["tuesday"]   == "true")
         user.update_attribute(:wednesday, days["wednesday"] == "true")
-        user.update_attribute(:thursday,  days["thursday"] == "true")
-        user.update_attribute(:friday,    days["friday"] == "true")
+        user.update_attribute(:thursday,  days["thursday"]  == "true")
+        user.update_attribute(:friday,    days["friday"]    == "true")
       end
     end
     flash[:success] = "Days updated"

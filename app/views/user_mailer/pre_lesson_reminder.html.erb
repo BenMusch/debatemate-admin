@@ -1,0 +1,22 @@
+<h1>Reminder: Complete your Pre-Lesson Survey</h1>
+
+<p>
+  <%= link_to "Click here to fill out the pre-lesson survey", new_lesson_url %>
+</p>
+
+<p>
+  You are receiving this message because you usually deliver a lesson on
+  <%= @day %>. If you are not hosting a lesson on
+  that day this week, ignore this email. If you never host lessons on
+  <%= @day %>s,
+  <%= link_to "update your profile", user_url(id: @user.id) %>
+</p>
+
+<hr/>
+
+<small>
+  <b>Do not respond to this email.</b> If you have any questions,
+  <%= link_to "contact Rich.", "mailto:richard@debatemate.com" %>
+  If you think you're receiving this email due to a bug in the web site,
+  <%= link_to "email the developer.", "mailto:muschol.b@husky.neu.edu" %>
+</small>
