@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  question_id: 
+  response_id: 
+  trigger_value: false
+
+two:
+  question_id: 
+  response_id: 
+  trigger_value: false

@@ -24,7 +24,12 @@ User.create(admin: false,
               email: Faker::Internet.email,
               password: "password",
               password_confirmation: "password",
-              phone: Faker::PhoneNumber.subscriber_number(10))
+              phone: Faker::PhoneNumber.subscriber_number(10),
+              monday: rand(10) == 0,
+              tuesday: rand(10) == 0,
+              wednesday: rand(10) == 0,
+              thursday: rand(10) == 0,
+              friday: rand(10) == 0)
 end
 
 10.times do

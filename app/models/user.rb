@@ -14,12 +14,12 @@
 #  monday            (boolean)
 #  tuesday           (boolean)
 #  wednesday         (boolean)
-# thursday          (boolean
+#  thursday          (boolean)
 #  friday            (boolean)
 #  phone             (integer)
 
 class User < ActiveRecord::Base
-  attr_accessor :remember_token, :activation_token, :reset_token
+  attr_accessor  :remember_token, :activation_token, :reset_token
   has_many :lessons, through: :goals
   has_many :goals
 
@@ -162,21 +162,8 @@ class User < ActiveRecord::Base
 
     # does the user usually have a lesson tomorrow?
     def lesson_tomorrow?
-      wday = Date.today.wday == 1
-      case wday
-      when 1
-        return monday?
-      when 2
-        return tuesday?
-      when 3
-        return wednesday?
-      when 4
-        return thursday?
-      when 5
-        return friday?
-      else
-        return false
-      end
+      return false if Date.tomorrow.saturday? || Date.tomorrow.sunday?
+      self.send("#{Date.tomorrow.strftime('%A').downcase}?")
     end
 
     # Sends the post-lesson survey reminder email

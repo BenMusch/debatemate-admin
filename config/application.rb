@@ -22,5 +22,8 @@ module DebateMateSurvey
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    # auto-load subfolders
+    config.autoload_paths += %W(#{config.root}/app/models/responses)
   end
 end

@@ -14,7 +14,8 @@ class LessonsController < ApplicationController
   def create
     find_or_initialize_lesson
     if !@lesson.new_record? && @lesson.given_by?(current_user)
-      flash[:danger] = "You have already created a lesson on the same day at the same school"
+      flash[:danger]  = "You have already created a lesson on the same day "
+      flash[:danger] += "at the same school"
       redirect_to @lesson
       return
     end
