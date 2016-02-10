@@ -1,9 +1,0 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-hhs:
-  id: 1
-  name: Hillsborough High School
-
-harper:
-  id: 2
-  name: Harper High School

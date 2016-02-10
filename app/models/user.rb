@@ -1,26 +1,27 @@
-## SCHEMA
-#  name              (string)
-#  email             (string)
-#  password_digest   (string)
-#  remember_digest   (string)
-#  reset_digest      (string)
-#  activation_digest (string)
-#  admin             (boolean)
-#  activated         (boolean)
-#  activated_at      (datetime)
-#  reset_sent_at     (datetime)
-#  goals             (has-many)
-#  lessons           (many-to-many through goals)
-#  monday            (boolean)
-#  tuesday           (boolean)
-#  wednesday         (boolean)
-#  thursday          (boolean)
-#  friday            (boolean)
-#  phone             (integer)
+class User
+  include Mongoid::Document
+  include ActiveModel::SecurePassword
 
-class User < ActiveRecord::Base
-  attr_accessor  :remember_token, :activation_token, :reset_token
-  has_many :lessons, through: :goals
+  attr_accessor :activation_token, :reset_token, :remember_token
+
+  field :name,              type: String
+  field :email,             type: String
+  field :password_digest,   type: String
+  field :remember_digest,   type: String
+  field :reset_digest,      type: String
+  field :activation_digest, type: String
+  field :admin,             type: Boolean, default: ->{ false }
+  field :activated,         type: Boolean, default: ->{ false }
+  field :activated_at,      type: DateTime
+  field :reset_sent_at,     type: DateTime
+  field :monday,            type: Boolean
+  field :tuesday,           type: Boolean
+  field :wednesday,         type: Boolean
+  field :thursday,          type: Boolean
+  field :friday,            type: Boolean
+  field :phone,             type: Integer
+
+  has_and_belongs_to_many :lessons
   has_many :goals
 
   before_save   :downcase_email
@@ -42,6 +43,7 @@ class User < ActiveRecord::Base
                        length: { is: 10 },
                        numericality: true,
                        uniqueness: true
+
   validate do
     check_admin_email
   end
@@ -50,9 +52,8 @@ class User < ActiveRecord::Base
 
   scope :mentor, -> { where(admin: false) }
 
-  # Returns the hash digest of the given string
   def User.digest(string)
-    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : 
                                                   BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
   end
@@ -69,6 +70,10 @@ class User < ActiveRecord::Base
   end
 
   # Returns true if the given token matches the digest
+  def schools
+    lessons.map(&:school).flatten.uniq
+  end
+
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     return false if digest.nil?
@@ -77,7 +82,7 @@ class User < ActiveRecord::Base
 
   # Forgets a user.
   def forget
-    update_attribute(:remember_digest, nil)
+    update_attribute :remember_digest, nil 
   end
 
   # Sends activation email
@@ -85,11 +90,10 @@ class User < ActiveRecord::Base
     UserMailer.account_activation(self).deliver_now
   end
 
-  # Sends password reset email
   def send_password_reset_email
     UserMailer.password_reset(self).deliver_now
   end
-
+  
   # Checks reminders and sends any necessary reminders
   def remind
     # if the lesson is in a day and they haven't done the pre-lesson
@@ -116,24 +120,32 @@ class User < ActiveRecord::Base
     update_attribute(:reset_sent_at, Time.zone.now)
   end
 
-  # Gets the first name of this user
+  def activate
+    udpate_attribute :activated,    true
+    update_attribute :activated_at, Time.zone.now
+  end
+
+  def create_reset_digest
+    self.reset_token = User.new_token
+    udpate_attribute :reset_digest,  User.digest(reset_token)
+    update_attribute :reset_sent_at, Time.zone.now
+  end
+
   def first_name
     name.split[0]
   end
 
-  # Formats this user as a string
   def to_s
     email + ": " + name
   end
 
   # returns the next lesson this user is in
   def next_lesson
-    Lesson.upcoming.order(:date).first
+    self.lessons.upcoming.first
   end
 
-  # returns the most recently completed lesson
   def previous_lesson
-    Lesson.previous.order('date DESC').first
+    self.lessons.completed.first
   end
 
   private
@@ -164,11 +176,6 @@ class User < ActiveRecord::Base
     def lesson_tomorrow?
       return false if Date.tomorrow.saturday? || Date.tomorrow.sunday?
       self.send("#{Date.tomorrow.strftime('%A').downcase}?")
-    end
-
-    # Sends the post-lesson survey reminder email
-    def send_survey_reminder_email
-      UserMailer.survey_reminder(self).deliver_now
     end
 
     # Sends the lesson reminder email

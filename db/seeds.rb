@@ -38,7 +38,7 @@ end
 
 50.times do
   Lesson.create(date: Faker::Date.between(3.weeks.ago, Date.today + 10.days),
-                school: School.order("RANDOM()").first)
+                school: School.skip(rand(School.count)).first)
 end
 
 Lesson.all.each do |lesson|

@@ -1,8 +1,8 @@
-## SCHEMA
-#  text     (text)
-#  lesson   (belongs to)
-#  user     (belongs to)
-class Goal < ActiveRecord::Base
+class Goal
+  include Mongoid::Document
+
+  field :text, type: String
+
   belongs_to :lesson
   belongs_to :user
 

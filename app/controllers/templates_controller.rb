@@ -4,7 +4,8 @@ class TemplatesController < ApplicationController
   before_action :force_admin
 
   def pre_lesson_template
-
+    @template = Template.where(pre: true).first
+    @template ||= Template.new
   end
 
   def create_pre_lesson_template

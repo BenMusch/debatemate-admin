@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   post   'login'    => 'sessions#create'
   delete 'logout'   => 'sessions#destroy'
   delete 'lessons/:id/remove_user' => 'lessons#remove_user'
-
+  get    'admin/pre_lesson_template' => 'templates#pre_lesson_template'
+  get    'admin/post_lesson_template' => 'templates#post_lesson_template'
+  
   resources :users
   resources :account_activations,  only: [:edit]
   resources :password_resets,      only: [:edit, :new, :create, :update]
