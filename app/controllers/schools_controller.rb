@@ -4,7 +4,7 @@ class SchoolsController < ApplicationController
 
   def index
     @school = School.new
-    @schools = School.all.order(:name)
+    @schools = School.all.order(:name.asc)
   end
 
   def show

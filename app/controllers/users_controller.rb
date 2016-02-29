@@ -8,8 +8,8 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.save
-      @user.send_activation_email
+    activator = UserActivatorService.new(user)
+    if activator.begin_activation
       flash[:info] = "Please check your email to activate your account"
       redirect_to root_url
     else
@@ -24,11 +24,11 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.mentor.order(:name)
+    @users = User.mentor.order(:name.asc)
   end
 
   def set_days
-    @users = User.mentor.order(:name)
+    @users = User.mentor.order(:name.asc)
   end
 
   def update_days

@@ -18,9 +18,13 @@ gem 'twilio-ruby'
 gem 'figaro'
 gem 'whenever',             :require => false
 
+
+group :development do
+  gem 'web-console', '~> 2.0'
+end
+
 group :development, :test do
   gem 'byebug'
-  gem 'web-console', '~> 2.0'
   gem 'rspec-rails'
 end
 

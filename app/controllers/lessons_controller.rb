@@ -34,7 +34,7 @@ class LessonsController < ApplicationController
   def index
     admin? ? lessons = Lesson.all : lessons = current_user.lessons
     @upcoming_lessons  = lessons.upcoming
-    @completed_lessons = lessons.order('date DESC').completed
+    @completed_lessons = lessons.order(date: 'desc').completed
   end
 
   def update
@@ -83,9 +83,9 @@ class LessonsController < ApplicationController
 
     # strong params
     def lesson_params
-      params.require(:lesson).permit(:school_id, :date,
-                                     goals_attributes: [:id, :user_id,
-                                                        :text, :lesson_id])
+      params.require(:lesson).permit(:school_id, :date, :user_id,
+                                     goals_attributes: [:id,        :text, 
+                                                        :lesson_id, :user_id])
     end
 
     # Finds a lesson with the same date and school, or creates the lesson

@@ -37,13 +37,16 @@ end
 end
 
 50.times do
-  Lesson.create(date: Faker::Date.between(3.weeks.ago, Date.today + 10.days),
-                school: School.skip(rand(School.count)).first)
+  lesson = Lesson.create(date: Faker::Date.between(3.weeks.ago, Date.today + 10.days),
+                         school: School.skip(rand(School.count)).first)
+  users = []
+  (rand(2) + 1).times { users << User.skip(rand(User.count)).first }
+  lesson.users = users
 end
 
 Lesson.all.each do |lesson|
-  users = User.order("RANDOM()")
-  (rand(2) + 1).times do |i|
-    lesson.goals << Goal.create(user: users[i], text: Faker::Lorem.sentence)
+  lesson.users.count.times do |i|
+    lesson.goals << Goal.create(user: lesson.users[i], 
+                                text: Faker::Lorem.sentence)
   end
 end
