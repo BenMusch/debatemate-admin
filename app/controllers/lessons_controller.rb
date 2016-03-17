@@ -38,7 +38,7 @@ class LessonsController < ApplicationController
   end
 
   def update
-    @lesson = Lesson.find(params[:id])
+    @lesson = Lesson.find(lesson_params[:id])
     if @lesson.update_attributes(lesson_params)
       flash[:success] = "Changes successful"
     else

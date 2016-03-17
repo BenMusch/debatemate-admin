@@ -1,4 +1,4 @@
-module LessonsViewUtils
+module LessonViewUtils
   def mentor_list
     users.map(&:name).join(", ")
   end

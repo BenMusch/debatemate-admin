@@ -16,7 +16,7 @@ class SchoolsController < ApplicationController
     if @school.update_attributes(school_params)
       flash[:success] = "Changes successful"
     else
-      flash[:dander] = "Changes unsuccessful. See the link in the footer to"
+      flash[:danger] = "Changes unsuccessful. See the link in the footer to "
       flash[:danger] += "contact the developer if problems persist"
     end
     redirect_to @school

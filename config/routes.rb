@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root                 'application#index'
   get    'signup'   => 'users#new'
   get    'login'    => 'sessions#new'
+  #TODO Refactor days to its own REST resource
   get    'set_days' => 'users#set_days'
   post   'set_days' => 'users#update_days'
   post   'login'    => 'sessions#create'

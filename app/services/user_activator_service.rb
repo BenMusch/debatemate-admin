@@ -6,8 +6,13 @@ class UserActivatorService
   end
   
   def activate
-    self.user.update_attribute :activated, true
-    self.user.update_attrieuve :activated_at, Time.zone.now
+    if user && !user.activated? && user.authenticated?(:activation, params[:id])
+      self.user.update_attribute :activated, true
+      self.user.update_attribute :activated_at, Time.zone.now
+      true
+    else
+      false
+    end
   end
 
   def begin_activation

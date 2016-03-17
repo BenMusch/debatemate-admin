@@ -1,8 +1,7 @@
 module SessionsHelper
-
   # Logs in the given UsersLoginTest
   def log_in(user)
-    session[:user_id] = user.id
+    SessionsService.new(user)
   end
 
   # Returns the current logged-in user (if any)
@@ -31,23 +30,18 @@ module SessionsHelper
 
   # Forgets a persistent session
   def forget(user)
-    user.forget
-    cookies.delete(:user_id)
-    cookies.delete(:remember_token)
+    SessionsService.new(user).forget
   end
 
   # Logs out the current user
   def log_out
-    forget(current_user)
-    session.delete(:user_id)
+    SessionsService.new(current_user).log_out
     @current_user = nil
   end
 
   # Remembers a user in a persistent session
   def remember(user)
-    user.remember
-    cookies.permanent.signed[:user_id] = user.id
-    cookies.permanent[:remember_token] = user.remember_token
+    SessionsService.new(user).remember
   end
 
   # Forces the user to login

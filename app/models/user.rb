@@ -19,14 +19,14 @@ class User
   field :wednesday,         type: Boolean
   field :thursday,          type: Boolean
   field :friday,            type: Boolean
-  field :phone,             type: Integer
+  field :phone,             type: String
 
   has_and_belongs_to_many :lessons
   has_many :goals
 
-  before_save   :downcase_email
+  before_save :downcase_email
 
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-zA-Z\d\-.]+\.[a-z]+\z/i
   validates :name,     length: { minimum: 6, maximum: 50 },
                        presence: true,
                        uniqueness: true,
@@ -39,8 +39,7 @@ class User
   validates :password, length: { minimum: 6 },
                        presence: true
   validates :phone,    presence: true,
-                       length: { is: 10 },
-                       numericality: true,
+                       format: { with: /\d{10}/ },
                        uniqueness: true
 
   validate do
@@ -55,25 +54,10 @@ class User
     self.name.split[0]
   end
 
-  def schools
-    self.lessons.map(&:school).flatten.uniq
-  end
-
-  # Remembers a user in the database for use in persistent sessions
-  def remember
-    self.remember_token = Token.new_token
-    update_attribute(:remember_digest, Token.digest(remember_token))
-  end
-
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     return false if digest.nil?
     BCrypt::Password.new(digest).is_password?(token)
-  end
-
-  # Forgets a user.
-  def forget
-    update_attribute :remember_digest, nil 
   end
 
   def send_password_reset_email
@@ -82,8 +66,9 @@ class User
 
   # Sets the password reset attributes
   def create_reset_digest
-    self.reset_token = User.new_token
-    update_attribute(:reset_digest,  User.digest(reset_token))
+    token = Token.new
+    self.reset_token = token.token
+    update_attribute(:reset_digest,  token.digest)
     update_attribute(:reset_sent_at, Time.zone.now)
   end
 
@@ -91,8 +76,8 @@ class User
     email + ": " + name
   end
 
-  def lessons
-    Lesson.where(user_ids: self._id)
+  def schools
+    @schools ||= School.in(id: lessons.pluck(:school_id))
   end
 
   private
@@ -105,7 +90,8 @@ class User
 
     # is this user's email hosted on debatemate.com?
     def debatemate_email?
-      email[(email.length - 15)..(email.length)] == "@debatemate.com"
+      len = email.length
+      email[(len - 15)..(len)] == "@debatemate.com"
     end
 
     # turns the email into all lower case

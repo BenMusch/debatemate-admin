@@ -1,3 +1,5 @@
-class OptionTemplate < ActiveRecord::Base
-  belongs_to :response_template
+class OptionTemplate
+  include Mongoid::Document
+
+  embedded_in :response_template
 end
