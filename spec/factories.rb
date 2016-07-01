@@ -46,8 +46,8 @@ FactoryGirl.define do
 
   factory :lesson do
     date { Date.today }
+    users { [create(:user)] }
     association :school, factory: :school
-    association :users, factory: :user
 
     trait :future do
       date { Date.today + 10.days }

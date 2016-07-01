@@ -3,7 +3,11 @@ require "rails_helper"
 describe Lesson, ".upcoming" do
 
   it "only includes lessons today or after" do
+    today = create(:lesson)
+    create(:lesson, :past)
+    future = create(:lesson, :future)
 
+    expect(Lesson.upcoming).to match_array [today, future]
   end
 
 end
@@ -11,7 +15,11 @@ end
 describe Lesson, ".completed" do
 
   it "only includes lessons after today" do
+    create(:lesson)
+    create(:lesson, :future)
+    yesterday = create(:lesson, :past)
 
+    expect(Lesson.completed).to match_array [yesterday]
   end
 
 end

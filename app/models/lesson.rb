@@ -1,6 +1,5 @@
 class Lesson
   include Mongoid::Document
-  include LessonViewUtils
 
   field :date, type: Date
 
@@ -21,5 +20,9 @@ class Lesson
 
   def to_s
     date.to_formatted_s(:short) + ": " + school.name
+  end
+
+  def delete_goals
+    goals.each { |goal| goal.destroy unless users_ids.include? goal.user_id }
   end
 end

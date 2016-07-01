@@ -176,14 +176,20 @@ describe User, "#schools" do
     school1 = create(:school)
     school2 = create(:school)
     create(:lesson, school: school1, users: [user, create(:user)])
-    create(:lesson, school: school1, users: [user])
     create(:lesson, school: school2, users: [user])
 
     expect(user.schools).to match_array [school1, school2]
   end
 
   it 'has no duplicates' do
+    user = create(:user)
+    school1 = create(:school)
+    school2 = create(:school)
+    create(:lesson, school: school1, users: [user, create(:user)])
+    create(:lesson, school: school1, users: [user])
+    create(:lesson, school: school2, users: [user])
 
+    expect(user.schools).to match_array [school1, school2]
   end
 
 end
@@ -206,7 +212,7 @@ describe User, "#authenticated?" do
 
     it "raises an error" do
       expect { create(:user).authenticated?("invalid", "token") }
-        .to raise_error(NoMethodError)
+        .to raise_error(Exception)
     end
 
   end

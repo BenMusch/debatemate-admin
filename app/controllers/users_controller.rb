@@ -8,8 +8,8 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    activator = UserActivatorService.new(user)
-    if activator.begin_activation
+    if user.save
+      UserAuthenticator.new(user).begin
       flash[:info] = "Please check your email to activate your account"
       redirect_to root_url
     else

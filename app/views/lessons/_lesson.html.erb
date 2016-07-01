@@ -1,5 +1,5 @@
 <% cache lesson do %>
   <div class="lesson">
-    <%= link_to lesson.row_name(admin?), lesson %>
+    <%= link_to row_name(lesson, current_user), lesson %>
   </div>
 <% end %>

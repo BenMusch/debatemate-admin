@@ -9,13 +9,14 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder',             '~> 2.0'
 gem 'coffee-script-source', '1.8.0'
-gem 'sdoc',                 '~> 0.4.0', group: :doc
+gem 'sdoc',                 '~> 0.4.0', :group => :doc
 gem 'tzinfo-data'
 gem 'bcrypt'
 gem 'bootstrap-sass'
 gem 'faker'
 gem 'twilio-ruby'
 gem 'figaro'
+gem 'json', '1.8.3'
 gem 'whenever',             :require => false
 
 

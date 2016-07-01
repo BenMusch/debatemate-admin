@@ -35,11 +35,11 @@ class MentorNotificationPolicy
 
   # Sends the lesson reminder email
   def send_lesson_reminder_email
-    UserMailer.lesson_reminder(self).deliver_now
+    UserMailer.lesson_reminder(mentor).deliver_now
   end
 
   # Sends the pre_lesson reminder email
   def send_pre_lesson_reminder_email
-    UserMailer.lesson_reminder(self).deliver_now
+    UserMailer.lesson_reminder(mentor).deliver_now
   end
 end

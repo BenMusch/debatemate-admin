@@ -60,24 +60,16 @@ class User
     BCrypt::Password.new(digest).is_password?(token)
   end
 
-  def send_password_reset_email
-    UserMailer.password_reset(self).deliver_now
-  end
-
-  # Sets the password reset attributes
-  def create_reset_digest
-    token = Token.new
-    self.reset_token = token.token
-    update_attribute(:reset_digest,  token.digest)
-    update_attribute(:reset_sent_at, Time.zone.now)
-  end
-
   def to_s
     email + ": " + name
   end
 
   def schools
     @schools ||= School.in(id: lessons.pluck(:school_id))
+  end
+
+  def lessons
+    Lesson.where(user_ids: id)
   end
 
   private

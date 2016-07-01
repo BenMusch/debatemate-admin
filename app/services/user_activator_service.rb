@@ -1,12 +1,8 @@
-class UserActivatorService
-  attr_accessor :user
+class UserAuthenticator
+  include TwoFactorAuthenticable
 
-  def initialize(user)
-    @user = user
-  end
-  
   def activate
-    if user && !user.activated? && user.authenticated?(:activation, params[:id])
+    if !user.activated? && user.authenticated(:activation, params[:id])
       self.user.update_attribute :activated, true
       self.user.update_attribute :activated_at, Time.zone.now
       true
@@ -15,22 +11,11 @@ class UserActivatorService
     end
   end
 
-  def begin_activation
-    if self.user.save
-      create_activation_digest
-      send_activation_email
-      true
-    else
-      false
-    end
+  def mailer
+    UserMailer.account_activation(user)
   end
 
-  def send_activation_email
-    UserMailer.account_activation(user).deliver_now
-  end
-
-  def create_activation_digest
-    user.update_attribute :activation_token, User.new_token
-    user.update_attribute :activation_digest, User.digest(activation_token)
+  def attribute
+    @attribute ||= :activation
   end
 end
