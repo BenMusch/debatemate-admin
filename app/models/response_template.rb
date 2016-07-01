@@ -1,3 +1,5 @@
-class ResponseTemplate < ActiveRecord::Base
-  belongs_to :question
+class ResponseTemplate
+  include Mongoid::Document
+
+  embedded_in :question_template
 end

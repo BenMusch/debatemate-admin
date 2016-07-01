@@ -10,7 +10,7 @@
       <div class="panel-heading">Completed Lessons</div>
       <div class="panel-body">
         <ul>
-          <% @user.lessons.completed.order(date: :desc).each do |lesson| %>
+          <% @user.lessons.completed.each do |lesson| %>
             <li><%= link_to lesson.to_s, lesson %></li>
           <% end %>
         </ul>

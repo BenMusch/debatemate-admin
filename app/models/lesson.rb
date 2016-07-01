@@ -11,8 +11,8 @@ class Lesson
 
   accepts_nested_attributes_for :goals
 
-  scope :upcoming, ->{ where('{date: { $gte: Date.today }}').order(date: 'asc') }
-  scope :completed, ->{ where('{ date: { $lt: Date.today } }').order(date: 'desc') }
+  scope :upcoming, ->{ where(:date.gte => Date.today).order(:date.asc) }
+  scope :completed, ->{ where(:date.lt => Date.today).order(:date.desc) }
 
   def given_by?(user)
     self.users.map(&:id).include?(user.id)
@@ -22,12 +22,7 @@ class Lesson
     date.to_formatted_s(:short) + ": " + school.name
   end
 
-  def mentor_list
-    users.map(&:name).join(", ")
-  end
-
-  def row_name(admin)
-    names = admin ? " (#{mentor_list})" : ''
-    to_s + names
+  def delete_goals
+    goals.each { |goal| goal.destroy unless users_ids.include? goal.user_id }
   end
 end

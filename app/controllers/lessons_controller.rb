@@ -34,32 +34,25 @@ class LessonsController < ApplicationController
   def index
     admin? ? lessons = Lesson.all : lessons = current_user.lessons
     @upcoming_lessons  = lessons.upcoming
-    @completed_lessons = lessons.order('date DESC').completed
+    @completed_lessons = lessons.order(date: 'desc').completed
   end
 
   def update
-    @lesson = Lesson.find(params[:id])
+    @lesson = Lesson.find(lesson_params[:id])
     if @lesson.update_attributes(lesson_params)
       flash[:success] = "Changes successful"
+      if @lesson.users.any?
+        @lesson.delete_goals
+        redirect_to @lesson
+      else
+        @lesson.destroy
+        flash[:info] = "No other mentors for that lesson. Lesson deleted."
+        redirect_to root_path
+      end
     else
       flash[:danger] = "Changes unsuccessful. See the link in the footer to"
       flash[:danger] += "contact the developer if problems persist"
-    end
-    redirect_to @lesson
-  end
-
-  def remove_user
-    @lesson = Lesson.find(params[:id])
-    if !@lesson.given_by?(current_user)
-      error_message  = "An error occurred. Try again. See the link in the "
-      error_message += "footer to report a bug if the problem persists"
-      flash[:danger] = error_message
-      redirect_to root_url
-    elsif @lesson.users.count == 1
-      delete_or_redirect_home @lesson, "Lesson deleted"
-    else
-      goal = Goal.find_by(lesson_id: @lesson.id, user_id: current_user.id)
-      delete_or_redirect_home goal, "Successfully removed from lesson"
+      redirect_to @lesson
     end
   end
 
@@ -83,9 +76,9 @@ class LessonsController < ApplicationController
 
     # strong params
     def lesson_params
-      params.require(:lesson).permit(:school_id, :date,
-                                     goals_attributes: [:id, :user_id,
-                                                        :text, :lesson_id])
+      params.require(:lesson).permit(:id, :school_id, :date, :user_id,
+                                     goals_attributes: [:id, :text,
+                                                        :lesson_id, :user_id])
     end
 
     # Finds a lesson with the same date and school, or creates the lesson

@@ -8,10 +8,15 @@
       <%= ", " unless @lesson.users.count - 1 == index %>
     <% end %>
   <% else %>
-    <%= @lesson.mentor_list %>
+    <%= mentor_list(@lesson) %>
   <% end %></h4>
 
 <center>
+
+  <%= form_for @lesson, html: {id: "remove_me_data"} do |f| %>
+    <%= f.hidden_field :user_ids, value: @lesson.user_ids - [current_user.id] %>
+  <% end %>
+
   <%= link_to "Remove me from this lesson", '#',
                data: { confirm: "Are you sure?"} %> |
   <%= link_to "Change the date of this lesson", '#', id: "date-change-button",
