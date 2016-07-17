@@ -11,19 +11,15 @@ module TwoFactorAuthenticatable
 
   def begin
     create_digest
-    send_email
+    mailer.deliver
   end
 
   def create_digest
     token = Token.new
-    user.send digest_attr_name + "=", token.digest
-    user.send token_attr_name + "=", token.token
-    user.send updated_at_attr_name + "=", Time.zone.now
+    user.send token_attr_name() + "=", token.token
+    user.send digest_attr_name() + "=", token.digest
+    user.send updated_at_attr_name() + "=", Time.zone.now
     user.save
-  end
-
-  def send_email
-    mailer.deliver_now
   end
 
   def digest_attr_name
@@ -31,10 +27,14 @@ module TwoFactorAuthenticatable
   end
 
   def token_attr_name
-    "#{attribute}_digest"
+    "#{attribute}_token"
   end
 
-  def update_at_attr_name
+  def updated_at_attr_name
     "#{attribute}_at"
+  end
+
+  def authenticated?(token)
+    user.authenticated? attribute, token
   end
 end

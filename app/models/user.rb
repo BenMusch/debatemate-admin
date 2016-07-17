@@ -26,7 +26,7 @@ class User
 
   before_save :downcase_email
 
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-zA-Z\d\-.]+\.[a-z]+\z/i
+  VALID_EMAIL_REGEX = /\A[\w\-\.]+@[\w\-\.]+\.\w+\z/i
   validates :name,     length: { minimum: 6, maximum: 50 },
                        presence: true,
                        uniqueness: true,

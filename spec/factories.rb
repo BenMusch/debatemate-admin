@@ -3,7 +3,7 @@ require "factory_girl"
 FactoryGirl.define do
   factory :user do
     name { Faker::Name.name }
-    email { "#{name.split(" ").join("")}@example.com" }
+    email { "#{name.gsub(/[^0-9a-zA-Z]/i, '')}@example.com" }
     phone { Faker::Base.numerify("#{"#" * 10}") }
     admin false
     password "password"

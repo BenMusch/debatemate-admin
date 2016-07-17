@@ -1,5 +1,8 @@
-require 'rails/mongoid'
-require 'database_cleaner'
+ENV["RAILS_ENV"] ||= "test"
+require "rails/mongoid"
+require "capybara/rspec"
+require "database_cleaner"
+require "capybara/email/rspec"
 
 RSpec.configure do |config|
 
@@ -10,5 +13,8 @@ RSpec.configure do |config|
   config.mock_with :rspec do |mocks|
     mocks.verify_partial_doubles = true
   end
+
+  config.include Capybara::DSL
+  config.include Capybara::Email::DSL
 
 end

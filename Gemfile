@@ -16,23 +16,25 @@ gem 'bootstrap-sass'
 gem 'faker'
 gem 'twilio-ruby'
 gem 'figaro'
-gem 'json', '1.8.3'
-gem 'whenever',             :require => false
+gem 'whenever'
+gem 'json', '1.8.2'
+  gem 'nokogiri', '1.6.0'
 
 
 group :development do
   gem 'web-console', '~> 2.0'
   gem 'quiet_assets'
-  gem 'capybara'
 end
 
 group :development, :test do
+  gem 'capybara'
   gem 'byebug'
   gem 'database_cleaner'
   gem 'rspec-rails'
   gem 'factory_girl_rails', "~> 4.0"
   gem 'pry-rails'
   gem 'rspec-timecop'
+  gem 'capybara-email'
 end
 
 group :production do

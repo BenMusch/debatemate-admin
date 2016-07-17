@@ -1,6 +1,5 @@
 class DatabaseCleaner
   def self.clean
-    puts "HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
     models.each do |model|
       model.all.each(&:delete)
     end
@@ -16,6 +15,3 @@ class DatabaseCleaner
     @models
   end
 end
-
-
-nd
