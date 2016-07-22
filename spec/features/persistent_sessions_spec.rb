@@ -1,28 +1,24 @@
 require "spec_helper"
 
 describe "persistent sessions" do
-  
   before :each do
-    create(:user, :activated, email: "user@example.com", password: "password")
+    user = create(:user, :activated)
+    @email = user.email
+    @password = user.password
   end
 
   it "logs the user in throughout the session" do
-    visit "login"
-    within "#session" do
-      fill_in "Email", with: "user@example.com"
-      fill_in "Password", with: "password"
-    end
-    click_button "Log in"
+    login_with email: @email, password: @password
     expect(page).to have_content "Log out"
-    visit "users/" + User.find_by(email: "user@example.com").id
+    visit "users/" + User.find_by(email: @email).id
     expect(page).to have_content "Log out"
   end
 
   it "can remember the user across multiple sessions" do
     visit "login"
     within "#session" do
-      fill_in "Email", with: "user@example.com"
-      fill_in "Password", with: "password"
+      fill_in "Email", with: @email
+      fill_in "Password", with: @password
       check "Remember me"
     end
     click_button "Log in"

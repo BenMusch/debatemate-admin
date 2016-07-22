@@ -1,17 +1,17 @@
 require "factory_girl"
 
-    FactoryGirl.define do
-      factory :user do
-        name { Faker::Name.name }
-        email { "#{name.gsub(/[^0-9a-zA-Z]/i, '')}@example.com" }
-        phone { Faker::Base.numerify("#{"#" * 10}") }
-        admin false
-        password "password"
-        password_confirmation "password"
+FactoryGirl.define do
+  factory :user do
+    name { Faker::Name.name }
+    email { name.gsub(/[^0-9a-zA-Z]/i, '') + "@example.com" }
+    phone { Faker::Base.numerify("#" * 10) }
+    admin false
+    password "password"
+    password_confirmation "password"
 
     trait :admin do
       admin true
-      email { "#{name.split(" ").join("")}@debatemate.com" }
+      email { name.split(" ").join("") + "@debatemate.com" }
     end
 
     trait :activated do

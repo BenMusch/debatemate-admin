@@ -1,7 +1,6 @@
 require "spec_helper"
 
 describe "resetting the password" do
-
   before :each do
     user = create(:user, :activated)
     @email = user.email
@@ -60,7 +59,7 @@ describe "resetting the password" do
     click_on "Submit"
   end
 
-  def update_password_with(password, confirmation=nil)
+  def update_password_with(password, confirmation = nil)
     within "#reset" do
       fill_in "Password", with: password
       fill_in "Password confirmation", with: confirmation || password
