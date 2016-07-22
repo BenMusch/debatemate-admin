@@ -1,4 +1,14 @@
 module ApplicationHelper
+  DAYS_OF_WEEK = {
+    0 => "Sunday",
+    1 => "Monday",
+    2 => "Tuesday",
+    3 => "Wednesday",
+    4 => "Thursday",
+    5 => "Friday",
+    6 => "Saturday"
+  }
+
   def page_title(title = '')
     if title.empty?
       "Debate Mate USA"
@@ -8,24 +18,6 @@ module ApplicationHelper
   end
 
   def day_of_week_string(date)
-    wday = date.wday
-    case wday
-    when 0
-      "Sunday"
-    when 1
-      "Monday"
-    when 2
-      "Tuesday"
-    when 3
-      "Wednesday"
-    when 4
-      "Thursday"
-    when 5
-      "Friday"
-    when 6
-      "Saturday"
-    else
-      raise "lol wut is this date"
-    end
+    DAYS_OF_WEEK[date.wday]
   end
 end
