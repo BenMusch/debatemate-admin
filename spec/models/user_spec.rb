@@ -67,12 +67,6 @@ describe User, '.name' do
     expect(user.valid?).to be false
   end
 
-  it 'is at least 6 characters' do
-    user = build(:user, name: "Ben")
-
-    expect(user.valid?).to be false
-  end
-
   it 'is above 50 characters' do
     user = build(:user, name: "A" * 51)
 
@@ -129,12 +123,6 @@ describe User, '.admin' do
 end
 
 describe User, '.password' do
-
-  it 'is at least 6 characters' do
-    user = build(:user, password: "short")
-
-    expect(user.valid?).to be false
-  end
 
   it 'is present' do
     user = build(:user, password: "      ")

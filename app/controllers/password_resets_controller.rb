@@ -5,30 +5,31 @@ class PasswordResetsController < ApplicationController
   end
 
   def create
-    user = User.find_by(email: params[:password_reset][:email].downcase)
-    if user
-      reset_service.begin
+    if user && reset_service.begin
       flash[:info] = "Email sent with password reset instructions"
       redirect_to root_url
     else
-      flash.now[:danger] = "Email address not found"
+      flash.now[:danger] = "No user found with that email"
       render 'new'
     end
   end
 
   def edit
+    if reset_service.expired?
+      flash.now[:danger] = "Reset link expired. Please reset your password again."
+      render "new"
+    else
+      render "edit"
+    end
   end
 
   def update
-    if params[:user][:password].empty?
-      flash.now[:danger] = "Password cannot be empty"
-      render 'edit'
-    elsif user.update_attributes(user_params)
+    if user.update_attributes user_params
       log_in user
-      flash[:success] = "Password has been reset."
+      flash[:success] = "Password has been reset"
       redirect_to user
     else
-      render 'edit'
+      render "edit"
     end
   end
 
@@ -39,7 +40,11 @@ class PasswordResetsController < ApplicationController
   end
 
   def user
-    @user ||= User.find_by(email: params[:email])
+    @user ||= User.where(email: email).first
+  end
+
+  def email
+    params[:password_reset] ? params[:password_reset][:email] : params[:email]
   end
 
   def reset_service
@@ -47,7 +52,7 @@ class PasswordResetsController < ApplicationController
   end
 
   def valid_user
-    unless reset_service.valid?
+    unless reset_service.authenticated?(params[:id])
       flash[:danger] = "Invalid reset link"
       redirect_to root_url
     end

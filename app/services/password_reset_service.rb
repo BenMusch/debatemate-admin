@@ -1,5 +1,4 @@
 class PasswordResetService
-  #TODO refactor all of this to module w/ dynamically created method names
   include TwoFactorAuthenticatable
 
   def attribute

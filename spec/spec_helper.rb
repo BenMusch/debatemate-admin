@@ -18,3 +18,12 @@ RSpec.configure do |config|
   config.include Capybara::Email::DSL
 
 end
+
+def login_with(email:, password:)
+    visit "/login"
+    within "#session" do
+      fill_in "Email", with: email
+      fill_in "Password", with: password
+    end
+    click_on "Log in"
+end
