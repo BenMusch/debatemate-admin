@@ -19,6 +19,7 @@ gem 'figaro'
 gem 'whenever'
 gem 'json', '1.8.2'
 gem 'nokogiri', '1.6.0'
+gem 'react-rails'
 
 
 group :development do

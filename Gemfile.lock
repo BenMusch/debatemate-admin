@@ -40,6 +40,10 @@ GEM
     ast (2.3.0)
     autoprefixer-rails (6.3.7)
       execjs
+    babel-source (5.8.35)
+    babel-transpiler (0.7.0)
+      babel-source (>= 4.0, < 6)
+      execjs (~> 2.0)
     bcrypt (3.1.11)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
@@ -168,6 +172,13 @@ GEM
     rainbow (2.1.0)
     rake (11.2.2)
     rdoc (4.2.2)
+    react-rails (1.8.0)
+      babel-transpiler (>= 0.7.0)
+      coffee-script-source (~> 1.8)
+      connection_pool
+      execjs
+      railties (>= 3.2)
+      tilt
     rspec-core (3.5.1)
       rspec-support (~> 3.5.0)
     rspec-expectations (3.5.0)
@@ -266,6 +277,7 @@ DEPENDENCIES
   quiet_assets
   rails (= 4.2.4)
   rails_12factor (= 0.0.2)
+  react-rails
   rspec-rails
   rspec-timecop
   sass-rails (~> 5.0)
