@@ -67,12 +67,6 @@ describe User, '.name' do
     expect(user.valid?).to be false
   end
 
-  it 'is at least 6 characters' do
-    user = build(:user, name: "Ben")
-
-    expect(user.valid?).to be false
-  end
-
   it 'is above 50 characters' do
     user = build(:user, name: "A" * 51)
 
@@ -129,12 +123,6 @@ describe User, '.admin' do
 end
 
 describe User, '.password' do
-
-  it 'is at least 6 characters' do
-    user = build(:user, password: "short")
-
-    expect(user.valid?).to be false
-  end
 
   it 'is present' do
     user = build(:user, password: "      ")
@@ -215,29 +203,5 @@ describe User, "#authenticated?" do
         .to raise_error(Exception)
     end
 
-  end
-end
-
-describe User, "#create_reset_digest" do
-
-  it "generates a new token and sets reset_sent_at to the current time" do
-    Timecop.freeze
-    user = create(:user)
-    user.create_reset_digest
-
-    expect(user.reset_token).to_not be_nil
-    expect(user.reset_digest).to_not be_nil
-    expect(user.reset_sent_at).to eq(Time.zone.now)
-    token = user.reset_token
-    digest = user.reset_digest
-    time = user.reset_sent_at
-    expect(user.authenticated?("reset", token)).to be true
-
-    Timecop.return
-    user.create_reset_digest
-
-    expect(user.reset_token).to_not eq(token)
-    expect(user.reset_digest).to_not eq(digest)
-    expect(user.reset_sent_at).to be > time
   end
 end

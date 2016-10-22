@@ -44,8 +44,9 @@ module SessionsHelper
 
   # Remembers a user in a persistent session
   def remember(user)
-    user.remember_token = Token.new_token
-    user.update_attribute :remember_digest, Token.digest(user.remember_token)
+    token = Token.new
+    user.remember_token = token.token
+    user.update_attribute :remember_digest, token.digest
     cookies.permanent.signed[:user_id] = user.id
     cookies.permanent[:remember_token] = user.remember_token
   end

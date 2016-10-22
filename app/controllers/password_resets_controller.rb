@@ -1,55 +1,60 @@
 class PasswordResetsController < ApplicationController
-  before_action :get_user, only:   [:edit, :update]
   before_action :valid_user, only: [:edit, :update]
 
   def new
   end
 
   def create
-    @user = User.find_by(email: params[:password_reset][:email].downcase)
-    if @user
-      PasswordResetter.new(user).begin
+    if user && reset_service.begin
       flash[:info] = "Email sent with password reset instructions"
       redirect_to root_url
     else
-      flash.now[:danger] = "Email address not found"
+      flash.now[:danger] = "No user found with that email"
       render 'new'
     end
   end
 
   def edit
+    if reset_service.expired?
+      flash.now[:danger] = "Reset link expired. Please reset your password again."
+      render "new"
+    else
+      render "edit"
+    end
   end
 
   def update
-    if params[:user][:password].empty?
-      flash.now[:danger] = "Password cannot be empty"
-      render 'edit'
-    elsif @user.update_attributes(user_params)
-      log_in @user
-      flash[:success] = "Password has been reset."
-      redirect_to @user
+    if user.update_attributes user_params
+      log_in user
+      flash[:success] = "Password has been reset"
+      redirect_to user
     else
-      render 'edit'
+      render "edit"
     end
   end
 
   private
 
-    def user_params
-      params.require(:user).permit(:password, :password_confirmation)
-    end
+  def user_params
+    params.require(:user).permit(:password, :password_confirmation)
+  end
 
-    # Before filters
+  def user
+    @user ||= User.where(email: email).first
+  end
 
-    def get_user
-      @user = User.find_by(email: params[:email])
-    end
+  def email
+    params[:password_reset] ? params[:password_reset][:email] : params[:email]
+  end
 
-    # Confirms a valid user
-    def valid_user
-      unless @user && @user.activated? && @user.authenticated?(:reset, params[:id])
-        flash[:danger] = "Invalid reset link"
-        redirect_to root_url
-      end
+  def reset_service
+    @reset_service ||= PasswordResetService.new(user)
+  end
+
+  def valid_user
+    unless reset_service.authenticated?(params[:id])
+      flash[:danger] = "Invalid reset link"
+      redirect_to root_url
     end
+  end
 end

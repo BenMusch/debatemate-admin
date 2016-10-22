@@ -8,19 +8,18 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if user.save
-      UserAuthenticator.new(user).begin
+    if @user.save && UserActivatorService.new(@user).begin
       flash[:info] = "Please check your email to activate your account"
       redirect_to root_url
     else
-      render 'new'
+      render "new"
     end
   end
 
   def show
     @user = User.find(params[:id])
     puts @user.name
-    render 'show'
+    render "show"
   end
 
   def index
@@ -48,27 +47,26 @@ class UsersController < ApplicationController
 
   private
 
-    def user_params
-      params[:admin] = params[:admin] == '1'
-      params.require(:user).permit(:password, :password_confirmation,
-                                   :name,     :email,
-                                   :admin,    :monday,
-                                   :tuesday,  :wednesday,
-                                   :thursday, :friday,
-                                   :phone)
-    end
+  def user_params
+    params[:admin] = params[:admin] == "1"
+    params.require(:user).permit(:password, :password_confirmation,
+                                 :name,     :email,
+                                 :admin,    :monday,
+                                 :tuesday,  :wednesday,
+                                 :thursday, :friday,
+                                 :phone)
+  end
 
-    # Forces the current_user to be logged in and either an admin or the user
-    # whose profile is being shown
-    def force_same_user_or_admin
-      unless admin? || (current_user && current_user.id == params[:id])
-        if logged_in?
-          message = "You cannot view other users' profiles"
-        else
-          message = "You must be logged in to view this page"
-        end
-        flash[:danger] = message
-        redirect_to root_url
-      end
+  # Forces the current_user to be logged in and either an admin or the user
+  # whose profile is being shown
+  def force_same_user_or_admin
+    unless admin? || (current_user && current_user.id == params[:id])
+      flash[:danger] = if logged_in?
+                         "You cannot view other users' profiles"
+                       else
+                         "You must be logged in to view this page"
+                       end
+      redirect_to root_url
     end
+  end
 end

@@ -21,12 +21,14 @@ class User
   field :friday,            type: Boolean
   field :phone,             type: String
 
+  has_secure_password
+
   has_and_belongs_to_many :lessons
   has_many :goals
 
   before_save :downcase_email
 
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-zA-Z\d\-.]+\.[a-z]+\z/i
+  VALID_EMAIL_REGEX = /\A[\w\-\.]+@[\w\-\.]+\.\w+\z/i
   validates :name,     length: { minimum: 6, maximum: 50 },
                        presence: true,
                        uniqueness: true,
@@ -36,17 +38,21 @@ class User
                        uniqueness: true,
                        presence: true,
                        case_sensitive: false
-  validates :password, length: { minimum: 6 },
-                       presence: true
+  validates :password, presence: true,
+                       length: { minimum: 6 },
+                       on: :create
+  validates :password, allow_blank: true,
+                       length: { minimum: 6 },
+                       format: { with: /\A\S+\z/i }
   validates :phone,    presence: true,
                        format: { with: /\d{10}/ },
                        uniqueness: true
 
   validate do
     check_admin_email
+    non_blank_password
   end
 
-  has_secure_password
 
   scope :mentor, -> { where(admin: false) }
 
@@ -73,21 +79,28 @@ class User
   end
 
   private
-    # validates admin emails using the debatemate_email method
-    def check_admin_email
-      if admin? && !debatemate_email?
-        errors.add(:email, "must be hosted at debatemate.com for admin users")
-      end
+  # validates admin emails using the debatemate_email method
+  def check_admin_email
+    if admin? && !debatemate_email?
+      errors.add(:email, "must be hosted at debatemate.com for admin users")
     end
+  end
 
-    # is this user's email hosted on debatemate.com?
-    def debatemate_email?
-      len = email.length
-      email[(len - 15)..(len)] == "@debatemate.com"
+  #non-blank password
+  def non_blank_password
+    unless password.nil? || password.present?
+      errors.add(:password, "cannot be blank")
     end
+  end
 
-    # turns the email into all lower case
-    def downcase_email
-      self.email = email.downcase
-    end
+  # is this user's email hosted on debatemate.com?
+  def debatemate_email?
+    len = email.length
+    email[(len - 15)..(len)] == "@debatemate.com"
+  end
+
+  # turns the email into all lower case
+  def downcase_email
+    self.email = email.downcase
+  end
 end
